@@ -11,6 +11,35 @@ all: box lab
 
 lab: clean-lab init-lab start-lab
 
+linuxkit: build-linuxkit-box run-linuxkit-box
+
+cache-images:
+	cd $(CURDIR)/docker && docker-compose build \
+	&& docker-compose config \
+	| awk '{if ($$1 == "image:") print $$2;}'  \
+	| xargs -I {} make -C $(CURDIR) docker/image-cache/{}.tar
+
+docker/image-cache/%.tar:
+	mkdir -p $(dir $@)
+	docker image save -o $@ $(shell basename $@ .tar)
+
+linuxkit/bin/linuxkit:
+	rm -rf ./linuxkit
+	git clone https://github.com/linuxkit/linuxkit
+	cd ./linuxkit && make
+	linuxkit/bin/linuxkit version
+
+custom-compose:
+	docker build -t oufti/compose $(CURDIR)/docker/compose/
+
+build-linuxkit-box: cache-images custom-compose linuxkit/bin/linuxkit $(BOX_NAME).iso
+
+$(BOX_NAME).iso:
+	linuxkit/bin/linuxkit build -format iso-bios $(CURDIR)/linuxkit-def.yml
+
+run-linuxkit-box:
+	linuxkit/bin/linuxkit run vbox --iso linuxkit-def.iso -cpus 2 -mem 4096 -disk size=10G
+
 clean: clean-lab clean-box
 
 box: clean-box build-box test-box
@@ -52,4 +81,4 @@ clean-box:
 	cd $(GIT_SUBPROJECT) && git checkout .
 
 .PHONY: all lab box clean build-box clean-box start-lab clean-lab \
-	suspend-lab test
+	suspend-lab test build-linuxkit-box run-linuxkit-box cache-images linuxkit
