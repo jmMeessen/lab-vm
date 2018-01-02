@@ -1,5 +1,8 @@
 #!/bin/bash
 
+load "${BATS_LIBS}/bats-support/load.bash"
+load "${BATS_LIBS}/bats-assert/load.bash"
+
 # Validation of parameters
 if [ -z "${TESTS_URL}" ]
 then
@@ -13,5 +16,5 @@ export CURL_OPTS
 
 ## Global Utility Functions
 execute_vagrant_ssh_command() {
-    vagrant ssh -c "${*}" -- -n -T
+  vagrant ssh -c "${*}" -- -n -T
 }

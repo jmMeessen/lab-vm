@@ -39,7 +39,7 @@ email-ext:2.61
 favorite:2.3.1
 git-client:2.7.0
 git-server:1.7
-git:3.6.4
+git:3.7.0
 gitea:1.0.4
 github-api:1.90
 github-branch-source:2.3.2
