@@ -13,10 +13,14 @@ resource "aws_instance" "lab_node" {
   ]
 
   associate_public_ip_address = true
+
+  tags {
+    Name = "JUC2018_lab_${count.index}"
+  }
 }
 
 resource "aws_security_group" "lab_sg" {
-  name = "lab_sg"
+  name = "JUC2018_lab_sg"
 
   ## Allow Internet Access for everyone
   egress {
