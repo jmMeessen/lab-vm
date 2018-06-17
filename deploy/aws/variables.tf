@@ -3,14 +3,14 @@ variable "lab_amis" {
   type        = "map"
 
   default = {
-    "us-east-1"    = "ami-e141029e"
+    "us-east-1"    = "ami-dff8baa0"
     "eu-central-1" = "ami-12a294f9"
   }
 }
 
 variable "lab_instances_count" {
   description = "How many instances to start for lab"
-  default     = 4
+  default     = 2
 }
 
 variable "lab_region" {
