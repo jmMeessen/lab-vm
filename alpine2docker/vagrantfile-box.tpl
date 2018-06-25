@@ -14,6 +14,9 @@ Vagrant.configure("2") do |config|
     # For secured workstations
     vm.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 
+    # Port forwarding
+    override.vm.network "forwarded_port", guest: 10000, host: 10000, auto_correct: true, id: "http"
+
     # No FS share to allow any depds to the host
     config.vm.synced_folder ".", "/vagrant", disabled: true
   end
