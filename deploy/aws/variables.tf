@@ -3,7 +3,7 @@ variable "lab_amis" {
   type        = "map"
 
   default = {
-    "us-east-1"    = "ami-dff8baa0"
+    "us-east-1"    = "ami-2597ca5a"
     "eu-central-1" = "ami-12a294f9"
   }
 }
