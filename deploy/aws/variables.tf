@@ -10,7 +10,7 @@ variable "lab_amis" {
 
 variable "lab_instances_count" {
   description = "How many instances to start for lab"
-  default     = 2
+  default     = 35
 }
 
 variable "lab_region" {
